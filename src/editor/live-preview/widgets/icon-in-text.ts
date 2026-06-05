@@ -70,23 +70,18 @@ export class IconInTextWidget extends WidgetType {
       wrap.style.transform = 'translateY(13%)';
       wrap.innerHTML = svgElement;
     } else if (emoji.isEmoji(this.id)) {
-  // FIXED: Handle cases where twemoji doesn't support the emoji (like ♟)
-  let emojiValue = emoji.parseEmoji(
-    this.plugin.getSettings().emojiStyle,
-    this.id,
-    fontSize,
-  );
-
-  // Fall back to native emoji if twemoji fails
-  if (!emojiValue && this.plugin.getSettings().emojiStyle === 'twemoji') {
-    emojiValue = this.id;
-  }
-
-  // Only set innerHTML if we have a valid emoji value
-  if (emojiValue) {
-    wrap.innerHTML = emojiValue;
-  }
-} else {
+      let emojiValue = emoji.parseEmoji(
+        this.plugin.getSettings().emojiStyle,
+        this.id,
+        fontSize,
+      );
+      if (!emojiValue && this.plugin.getSettings().emojiStyle === 'twemoji') {
+        emojiValue = this.id;
+      }
+      if (emojiValue) {
+        wrap.innerHTML = emojiValue;
+      }
+    } else {
       wrap.append(
         `${this.plugin.getSettings().iconIdentifier}${this.id}${
           this.plugin.getSettings().iconIdentifier

@@ -46,21 +46,16 @@ export class IconInLinkWidget extends WidgetType {
     }
 
     if (emoji.isEmoji(innerHTML)) {
-  // FIXED: Handle cases where twemoji doesn't support the emoji (like ♟)
-  let emojiValue = emoji.parseEmoji(
-    this.plugin.getSettings().emojiStyle,
-    innerHTML,
-    fontSize,
-  );
-
-  // Fall back to native emoji if twemoji fails
-  if (!emojiValue && this.plugin.getSettings().emojiStyle === 'twemoji') {
-    emojiValue = innerHTML;
-  }
-
-  // Use the processed emoji value or fallback
-  innerHTML = emojiValue || innerHTML;
-} else {
+      let emojiValue = emoji.parseEmoji(
+        this.plugin.getSettings().emojiStyle,
+        innerHTML,
+        fontSize,
+      );
+      if (!emojiValue && this.plugin.getSettings().emojiStyle === 'twemoji') {
+        emojiValue = innerHTML;
+      }
+      innerHTML = emojiValue || innerHTML;
+    } else {
       innerHTML = svg.setFontSize(innerHTML, fontSize);
     }
 
